@@ -45,11 +45,10 @@
 
 1. Repository 상단 Pull requests → New pull request → Create pull request 를 클릭합니다.
 2. 아래와 같이 제목을 설정합니다. 내용은 자유
-    - 제목
     
-    ```
-    이름 / n월 n주차 또는 날짜 / 푼 문제 개수
-    ```
+```
+이름 / n월 n주차 또는 날짜 / 푼 문제 개수
+```
     
 
 ## 코드리뷰
