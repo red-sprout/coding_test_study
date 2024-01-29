@@ -63,26 +63,22 @@ public class Main {
 			if(nowRed.cnt >= 10) break;
 			
 			for(int i = 0; i < 4; i++) {
-				boolean isMovable = false;
 				boolean isRedOut = false;
 				boolean isBlueOut = false;
 				
 				int nextRedRow = nowRed.row;
 				int nextRedCol = nowRed.col;
+				int nextBlueRow = nowBlue.row;
+				int nextBlueCol = nowBlue.col;
 				
 				while(board[nextRedRow + dr[i]][nextRedCol + dc[i]] == '.') {
-					if(nextRedRow + dr[i] == nowBlue.row && nextRedCol + dc[i] == nowBlue.col) break;
-					
-					isMovable = true;
+					if(nextRedRow + dr[i] == nextBlueRow && nextRedCol + dc[i] == nowBlue.col) break;
 					
 					nextRedRow += dr[i];
 					nextRedCol += dc[i];
 					
 					if(nextRedRow == holeRow && nextRedCol == holeCol) isRedOut = true;
 				}
-				
-				int nextBlueRow = nowBlue.row;
-				int nextBlueCol = nowBlue.col;
 				
 				while(board[nextBlueRow + dr[i]][nextBlueCol + dc[i]] == '.') {
 					if(!isRedOut && nextBlueRow + dr[i] == nextRedRow && nextBlueCol + dc[i] == nextRedCol) break;
@@ -93,16 +89,25 @@ public class Main {
 					if(nextBlueRow == holeRow && nextBlueCol == holeCol) isBlueOut = true;
 				}
 				
-				if(!isMovable) {
+				if(!isRedOut && board[nextRedRow + dr[i]][nextRedCol + dc[i]] == '.') {
 					while(board[nextRedRow + dr[i]][nextRedCol + dc[i]] == '.') {
-						if(nextRedRow + dr[i] == nowBlue.row && nextRedCol + dc[i] == nowBlue.col) break;
-						
-						isMovable = true;
+						if(nextRedRow + dr[i] == nextBlueRow && nextRedCol + dc[i] == nextBlueCol) break;
 						
 						nextRedRow += dr[i];
 						nextRedCol += dc[i];
 						
 						if(nextRedRow == holeRow && nextRedCol == holeCol) isRedOut = true;
+					}
+				}
+				
+				if(!isBlueOut && board[nextBlueRow + dr[i]][nextBlueCol + dc[i]] == '.') {
+					while(board[nextBlueRow + dr[i]][nextBlueCol + dc[i]] == '.') {
+						if(!isRedOut && nextBlueRow + dr[i] == nextRedRow && nextBlueCol + dc[i] == nextRedCol) break;
+						
+						nextBlueRow += dr[i];
+						nextBlueCol += dc[i];
+						
+						if(nextBlueRow == holeRow && nextBlueCol == holeCol) isBlueOut = true;
 					}
 				}
 				
@@ -113,7 +118,7 @@ public class Main {
 					flag = true;
 					ans = nextRed.cnt;
 					break;
-				} else if(isRedOut && isBlueOut) {
+				} else if(isBlueOut) {
 					continue;
 				}
 				
