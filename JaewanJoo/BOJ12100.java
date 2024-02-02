@@ -1,8 +1,8 @@
 import java.io.*;
 import java.util.*;
 
-// [BOJ] 2048(Easy) / 골드 2 /
-// 알고리즘 분류 : 
+// [BOJ] 2048(Easy) / 골드 2 / 4시간
+// 알고리즘 분류 : 구현 / 브루트포스 알고리즘 / 시뮬레이션 / 백트래킹
 public class Main {
 	private static int n;
 	private static int max = 0;
@@ -30,121 +30,128 @@ public class Main {
 		if(cnt == 5) {
 			for(int i = 0; i < n; i++) {
 				for(int j = 0; j < n; j++) {
-					max = Math.max(cnt, board[i][j]);
+					max = Math.max(max, board[i][j]);
 				}
 			}
 			return;
 		}
 		
-		int[][] res;
+		
 		for(int i = 0; i < 4; i++) {
+			int[][] res = null;
 			switch(i) {
 			case 0 : 
-				res = moveRowMinusOne(board);
-				dfs(cnt + 1, res);
+				res = arrayCopy(moveUp(board));
 				break;
 			case 1 : 
-				res = moveRowPlusOne(board);
-				dfs(cnt + 1, res);
+				res = arrayCopy(moveDown(board));
 				break;
 			case 2 : 
-				res = moveColMinusOne(board);
-				dfs(cnt + 1, res);
+				res = arrayCopy(moveLeft(board));
 				break;
 			case 3 : 
-				res = moveColPlusOne(board);
-				dfs(cnt + 1, res);
+				res = arrayCopy(moveRight(board));
 				break;
 			}
+			dfs(cnt + 1, res);
 		}
 	}
 	
-	public static int[][] moveRowMinusOne(int[][] board) {
-		int[][] res = board.clone();
+	public static int[][] arrayCopy(int[][] arr) {
+		int[][] res = new int[arr.length][arr.length];
+		for(int i = 0; i < arr.length; i++) {
+			for(int j = 0; j < arr[i].length; j++) {
+				res[i][j] = arr[i][j];
+			}
+		}
+		return res;
+	}
+	
+	public static int[][] moveUp(int[][] map) {
+		int[][] board = arrayCopy(map);
 		for(int col = 0; col < n; col++) {
-			for(int row = n - 1; row >= 1; row--) {
-				int now = res[row][col];
-				int next = res[row - 1][col];
-				
-				if(now == 0) {
-					res[row][col] = next;
-					res[row - 1][col] = 0;
-					continue;
-				}
-				
-				if(now == next) {
-					res[row][col] = now + next;
-					res[row - 1][col] = 0;
+			int idx = 0;
+			int block = 0;
+			for(int row = 0; row < n; row++) {
+				if(board[row][col] == 0) continue;
+				if(block == board[row][col]) {
+					board[idx - 1][col] = block * 2;
+					block = 0;
+					board[row][col] = 0;
+				} else {
+					block = board[row][col];
+					board[row][col] = 0;
+					board[idx][col] = block;
+					idx++;
 				}
 			}
 		}
-		return res;
+		return board;
 	}
 	
-	public static int[][] moveRowPlusOne(int[][] board) {
-		int[][] res = board.clone();
+	public static int[][] moveDown(int[][] map) {
+		int[][] board = arrayCopy(map);
 		for(int col = 0; col < n; col++) {
-			for(int row = 0; row <= n - 2; row++) {
-				int now = res[row][col];
-				int next = res[row + 1][col];
-				
-				if(now == 0) {
-					res[row][col] = next;
-					res[row + 1][col] = 0;
-					continue;
-				}
-				
-				if(now == next) {
-					res[row][col] = now + next;
-					res[row + 1][col] = 0;
+			int idx = n - 1;
+			int block = 0;
+			for(int row = n - 1; row >= 0; row--) {
+				if(board[row][col] == 0) continue;
+				if(block == board[row][col]) {
+					board[idx + 1][col] = block * 2;
+					block = 0;
+					board[row][col] = 0;
+				} else {
+					block = board[row][col];
+					board[row][col] = 0;
+					board[idx][col] = block;
+					idx--;
 				}
 			}
 		}
-		return res;
+		return board;
 	}
 	
-	public static int[][] moveColMinusOne(int[][] board) {
-		int[][] res = board.clone();
+	public static int[][] moveLeft(int[][] map) {
+		int[][] board = arrayCopy(map);
 		for(int row = 0; row < n; row++) {
-			for(int col = 0; col <= n - 2; col++) {
-				int now = res[row][col];
-				int next = res[row][col + 1];
-				
-				if(now == 0) {
-					res[row][col] = next;
-					res[row][col + 1] = 0;
-					continue;
-				}
-				
-				if(now == next) {
-					res[row][col] = now + next;
-					res[row][col + 1] = 0;
+			int idx = 0;
+			int block = 0;
+			for(int col = 0; col < n; col++) {
+				if(board[row][col] == 0) continue;
+				if(block == board[row][col]) {
+					board[row][idx - 1] = block * 2;
+					block = 0;
+					board[row][col] = 0;
+				} else {
+					block = board[row][col];
+					board[row][col] = 0;
+					board[row][idx] = block;
+					idx++;
 				}
 			}
 		}
-		return res;
-		
+		return board;
 	}
 	
-	public static int[][] moveColPlusOne(int[][] board) {
-		int[][] res = board.clone();
+	public static int[][] moveRight(int[][] map) {
+		int[][] board = arrayCopy(map);
 		for(int row = 0; row < n; row++) {
-			for(int col = n - 1; col >= 1; col--) {
-				int now = res[row][col];
-				int next = res[row][col - 1];
-				
-				if(now == 0) {
-					res[row][col] = next;
-					res[row][col - 1] = 0;
-					continue;
-				}
-				
-				if(now == next) {
-					res[row][col] = now + next;
-					res[row][col - 1] = 0;
+			int idx = n - 1;
+			int block = 0;
+			for(int col = n - 1; col >= 0; col--) {
+				if(board[row][col] == 0) continue;
+				if(block == board[row][col]) {
+					board[row][idx + 1] = block * 2;
+					block = 0;
+					board[row][col] = 0;
+				} else {
+					block = board[row][col];
+					board[row][col] = 0;
+					board[row][idx] = block;
+					idx--;
 				}
 			}
 		}
-		return res;
+		return board;
 	}
 }
