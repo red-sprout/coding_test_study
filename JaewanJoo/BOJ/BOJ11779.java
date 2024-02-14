@@ -3,7 +3,6 @@ import java.util.*;
 
 // [BOJ] 최소비용 구하기 2 / 골드 3 / 1시간 30분
 // 알고리즘 분류 : 그래프 이론 / 데이크스트라 / 최단 경로
-
 public class Main {
 	private static int n, m;
 	private static long[] cost;

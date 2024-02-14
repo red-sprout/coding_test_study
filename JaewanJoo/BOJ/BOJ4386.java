@@ -1,6 +1,8 @@
 import java.io.*;
 import java.util.*;
 
+// [BOJ] 별자리 만들기 / 골드 3 / 1시간
+// 알고리즘 분류 : 그래프 이론 / 최소 스패닝 트리
 public class Main {
 	static int n;
 	static int[] parent;
