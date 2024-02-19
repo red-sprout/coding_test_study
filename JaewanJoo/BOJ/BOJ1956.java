@@ -25,7 +25,6 @@ public class Main {
 		
 		int a, b, c;
 		int cycle = INF;
-		
 		for(int i = 0; i < e; i++) {
 			st = new StringTokenizer(br.readLine());
 			a = Integer.parseInt(st.nextToken());
