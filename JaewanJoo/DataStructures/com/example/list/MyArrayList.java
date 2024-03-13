@@ -54,6 +54,7 @@ public class MyArrayList<E> implements MyList<E> {
 		return false;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public E get(int index) {
 		return (E)array[index];
@@ -87,6 +88,7 @@ public class MyArrayList<E> implements MyList<E> {
 		return this.index + 1;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
