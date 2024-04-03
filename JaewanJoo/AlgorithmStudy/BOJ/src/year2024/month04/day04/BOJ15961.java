@@ -12,42 +12,38 @@ public class BOJ15961 {
 		int d = Integer.parseInt(st.nextToken());
 		int k = Integer.parseInt(st.nextToken());
 		int c = Integer.parseInt(st.nextToken());
+		
 		int[] sushi = new int[n]; //idx 번째 스시 종류
 		int[] eat = new int[d + 1]; //idx류 스시의 스시 갯수
-		
-		eat[c]++;
+
 		for(int i = 0; i < n; i++) {
 			sushi[i] = Integer.parseInt(br.readLine());
 		}
 		
-		int maxCnt = 0;
-		int cnt = 1;
+		int cnt = 0;
 		for(int i = 0; i < k; i++) {
-			if(eat[sushi[i]] == 0) {
-				cnt++;
+			if(eat[sushi[i]] == 0) cnt++;
+			eat[sushi[i]]++;
+		}
+		
+		int ans = cnt;
+		
+		for(int i = 0; i < n; i++) {
+			if(ans <= cnt) {
+				if(eat[c] == 0) {
+					ans = cnt + 1;
+				} else {
+					ans = cnt;
+				}
 			}
-			eat[sushi[i]]++;
+			
+			eat[sushi[i]]--;
+			if(eat[sushi[i]] == 0) cnt--;
+			if(eat[sushi[(i + k) % n]] == 0) cnt++;
+			eat[sushi[(i + k) % n]]++;
 		}
 		
-		int idx = 0;
-		for(int i = k; i < n; i++) {
-			if(sushi[idx] != c) eat[sushi[idx]]--;
-			if(eat[sushi[idx]] == 0) cnt--;
-			if(eat[sushi[i]] == 0) cnt++;
-			eat[sushi[i]]++;
-			maxCnt = Math.max(maxCnt, cnt);
-			idx++;
-		}
-		
-		for(int i = 0; i < k; i++) {
-			if(sushi[idx] != c) eat[sushi[idx]]--;
-			if(eat[sushi[idx]] == 0) cnt--;
-			if(eat[sushi[i]] == 0) cnt++;
-			maxCnt = Math.max(maxCnt, cnt);
-			idx++;
-		}
-		
-		System.out.println(maxCnt);
+		System.out.println(ans);
 		br.close();
 	}
 }
