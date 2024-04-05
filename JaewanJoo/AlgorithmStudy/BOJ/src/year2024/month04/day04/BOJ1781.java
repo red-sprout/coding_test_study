@@ -15,10 +15,10 @@ public class BOJ1781 {
 
 		@Override
 		public int compareTo(Problem p) {
-			if(this.ramen == p.ramen) {
-				return this.deadLine - p.deadLine;
-			} else {
+			if(this.deadLine == p.deadLine) {
 				return p.ramen - this.ramen;
+			} else {
+				return this.deadLine - p.deadLine;
 			}
 		}
 	}
@@ -29,7 +29,7 @@ public class BOJ1781 {
 		StringTokenizer st;
 		int n = Integer.parseInt(br.readLine());
 		Problem[] problem = new Problem[n];
-		PriorityQueue<Problem> pq = new PriorityQueue<>();
+		PriorityQueue<Integer> pq = new PriorityQueue<>();
 		
 		for(int i = 0; i < n; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -38,12 +38,23 @@ public class BOJ1781 {
 			problem[i] = new Problem(deadLine, ramen);
 		}
 		
-		Arrays.sort(problem, (o1, o2)->(o1.deadLine - o2.deadLine));
+		Arrays.sort(problem);
 		
-		for(int i = n; i >= 1; i--) {
-			
+		for(int i = 0; i < n; i++) {
+			int deadLine = problem[i].deadLine;
+			int ramen = problem[i].ramen;
+			pq.add(ramen);
+			if(pq.size() > deadLine) {
+				pq.remove();
+			}
 		}
 		
+		int result = 0;
+		while(!pq.isEmpty()) {
+			result += pq.remove();
+		}
+		
+		System.out.println(result);
 		br.close();
 	}
 }
