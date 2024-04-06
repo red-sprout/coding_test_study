@@ -6,75 +6,64 @@ import java.util.*;
 public class BOJ1461 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		PriorityQueue<Integer> plus = new PriorityQueue<>(Collections.reverseOrder());
+		PriorityQueue<Integer> minus = new PriorityQueue<>(Collections.reverseOrder());
 		StringTokenizer st;
 		
 		st = new StringTokenizer(br.readLine());
 		int n = Integer.parseInt(st.nextToken());
 		int m = Integer.parseInt(st.nextToken());
 		
-		PriorityQueue<Integer> plus = new PriorityQueue<>();
-		PriorityQueue<Integer> minus = new PriorityQueue<>(Collections.reverseOrder());
-		
 		st = new StringTokenizer(br.readLine());
 		for(int i = 0; i < n; i++) {
 			int pos = Integer.parseInt(st.nextToken());
-			if(pos > 0) {
-				plus.add(pos);
-			} else {
-				minus.add(pos);
-			}
+			if(pos > 0) plus.add(pos);
+			else minus.add(-1 * pos);
 		}
 		
 		int ans = 0;
+		boolean isFirst = true;
+		boolean isPlus = true;
+		
 		while(true) {
-			int now = 0;
-			int nextPlus = 0;
-			int nextMinus = 0;
+			int dist = 0;
+			if(plus.size() < m && minus.size() < m) break;
+			
+			if(plus.size() < m) {
+				isPlus = false;
+				dist += minus.peek();
+			} else if(minus.size() < m) {
+				isPlus = true;
+				dist += plus.peek();
+			} else {
+				if(plus.peek() > minus.peek()) {
+					isPlus = true;
+					dist += plus.peek();
+				} else {
+					isPlus = false;
+					dist += minus.peek();
+				}
+			}
+			
+			if(isFirst) ans += dist;
+			else ans += 2 * dist;
 			
 			for(int i = 0; i < m; i++) {
-				if(plus.isEmpty() && minus.isEmpty()) break;
-				
-				if(plus.isEmpty()) {
-					if(minus.size() <= m) {
-						
-						break;
-					}
-					nextMinus = minus.remove();
-					continue;
-				}
-				
-				if(minus.isEmpty()) {
-					if(plus.size() <= m) {
-						break;
-					}
-					nextPlus = plus.remove();
-					continue;
-				}
-			
-				if(now > 0) {
-					if(Math.abs(plus.peek() - now) > Math.abs(minus.peek())) {
-						nextMinus = minus.remove();
-						now = nextMinus;
-					} else {
-						nextPlus = plus.remove();
-						now = nextPlus;
-					}
-				} else {
-					if(Math.abs(minus.peek() - now) > Math.abs(plus.peek())) {
-						nextPlus = plus.remove();
-						now = nextPlus;
-					} else {
-						nextMinus = minus.remove();
-						now = nextMinus;
-					}
-				}
+				if(isPlus) plus.remove();
+				else minus.remove();
 			}
 			
-			ans += 2 * (nextPlus - nextMinus);
-			if(plus.isEmpty() && minus.isEmpty()) {
-				ans -= Math.max(nextMinus, nextPlus);
-				break;
-			}
+			isFirst = false;
+		}
+		
+		plus.add(0);
+		minus.add(0);
+		
+		if(isFirst) {
+			ans += 2 * Math.min(plus.peek(), minus.peek()) + Math.max(plus.peek(), minus.peek());
+		} else {
+			ans += 2 * (plus.peek() + minus.peek());
 		}
 		
 		System.out.println(ans);
