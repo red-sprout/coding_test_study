@@ -4,18 +4,17 @@ import java.io.*;
 import java.util.*;
 
 public class BOJ1939 {
-	static class Node implements Comparable<Node> {
-		int end;
+	private static List<List<Node>> graph;
+	private static boolean[] visited;
+	private static int start, end;
+	
+	static class Node {
+		int idx;
 		int weight;
 		
-		Node(int end, int weight) {
-			this.end = end;
+		Node(int idx, int weight) {
+			this.idx = idx;
 			this.weight = weight;
-		}
-		
-		@Override
-		public int compareTo(Node e) {
-			return e.weight - this.weight;
 		}
 	}
 	public static void main(String[] args) throws IOException {
@@ -26,7 +25,8 @@ public class BOJ1939 {
 		int n = Integer.parseInt(st.nextToken());
 		int m = Integer.parseInt(st.nextToken());
 		
-		List<List<Node>> graph = new ArrayList<>();
+		graph = new ArrayList<>();
+		visited = new boolean[n + 1];
 		
 		for(int i = 0; i <= n; i++) {
 			graph.add(new ArrayList<>());
@@ -45,15 +45,42 @@ public class BOJ1939 {
 			graph.get(b).add(new Node(a, c));
 		}
 		
+		st = new StringTokenizer(br.readLine());
+		start = Integer.parseInt(st.nextToken());
+		end = Integer.parseInt(st.nextToken());
+		
 		right++;
-		boolean[] visited = new boolean[n + 1];
 		while(left < right) {
 			int mid = left + (right - left) / 2;
-			Arrays.fill(visited, false);
-			
-			
+			if(bfs(mid)) {
+				left = mid + 1;
+			} else {
+				right = mid;
+			}
 		}
 		
+		System.out.println(left - 1);
 		br.close();
+	}
+	
+	public static boolean bfs(int weight) {
+		Queue<Integer> q = new LinkedList<>();
+		Arrays.fill(visited, false);
+		
+		q.add(start);
+		visited[start] = true;
+		
+		while(!q.isEmpty()) {
+			int now = q.poll();
+			if(now == end) return true;
+			
+			for(Node n : graph.get(now)) {
+				if(visited[n.idx] || n.weight < weight) continue;
+				q.add(n.idx);
+				visited[n.idx] = true;
+			}
+		}
+		
+		return false;
 	}
 }
