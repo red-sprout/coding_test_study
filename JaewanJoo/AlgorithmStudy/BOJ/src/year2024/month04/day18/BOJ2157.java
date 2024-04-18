@@ -5,19 +5,37 @@ import java.util.*;
 
 public class BOJ2157 {
 	private static int maxScore = 0;
-	private static int currentMode = 0;
-	private static int[] pos = new int[4];
-	private static int[] dice = new int[10];
-	private static int[][] board = {
-			// 외부 둘레
-			{0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40},
-			// pos == 10;
-			{10, 13, 16, 19, 25, 30, 35, 40},
-			// pos == 20;
-			{20, 22, 24, 25, 30, 35, 40},
-			// pos == 30;
-			{30, 28, 27, 26, 25, 30, 35, 40},
-	};
+	private static int[] dice = new int[11];
+	private static int[] order = new int[11];
+	private static Node[] horses = new Node[5];
+	private static Node start;
+	
+	static class Node {
+		int score;
+		boolean isEnd;
+		boolean isExist;
+		boolean isBlue;
+		Node next;
+		Node blueNext;
+		
+		Node(int score) {
+			this.score = score;
+			this.isExist = false;
+		}
+		
+		Node add(int score) {
+			Node next = new Node(score);
+			this.next = next;
+			return next;
+		}
+		
+		static Node get(Node start, int score) {
+			for(Node n = start; ; n = n.next) {
+				if(n == null) return null;
+				if(n.score == score) return n;
+			}
+		}
+	}
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -27,26 +45,63 @@ public class BOJ2157 {
 			dice[i] = Integer.parseInt(st.nextToken());
 		}
 		
+		init();
+		dfs(1);
+		System.out.println(maxScore);
 		br.close();
 	}
 	
-	public static void dfs(int idx, int score) {
-		if(idx == 10) {
-			maxScore = Math.max(maxScore, score);
+	public static void dfs(int depth) {
+		if(depth >= 11) {
+			maxScore = Math.max(maxScore, game());
 			return;
 		}
 		
-		int now = dice[idx];
-		for(int i = 0; i < 4; i++) {
-			if(isExist(pos[i] + now)) continue;
-			if(pos[i])
+		for(int i = 1; i <= 4; i++) {
+			order[depth] = i;
+			dfs(depth + 1);
 		}
 	}
 	
-	public static boolean isExist(int next) {
-		for(int i = 0; i < 4; i++) {
-			if(pos[i] == next) return true;
+	public static int game() {
+		Arrays.fill(horses, start);
+		
+		
+	}
+	
+	public static void init() {
+		start = new Node(0);
+		Node n = start;
+		
+		for(int i = 2; i <= 40; i += 2) {
+			n = n.add(i);
 		}
-		return false;
+		
+		Node end = n.add(0);
+		end.isEnd = true;
+		end.next = end;
+		
+		Node cross = new Node(25);
+		
+		n = cross.add(30);
+		n = n.add(35);
+		n.next = Node.get(start, 40);
+		
+		n = Node.get(start, 10);
+		n = n.blueNext = new Node(13);
+		n = n.add(16);
+		n = n.add(19);
+		n.next = cross;
+		
+		n = Node.get(start, 20);
+		n = n.blueNext = new Node(22);
+		n = n.add(24);
+		n.next = cross;
+		
+		n = Node.get(start, 30);
+		n = n.blueNext = new Node(28);
+		n = n.add(27);
+		n = n.add(26);
+		n.next = cross;
 	}
 }
