@@ -11,11 +11,11 @@ public class BOJ2157 {
 	private static int[][] board = {
 			// 외부 둘레
 			{0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40},
-			// now == 10;
+			// pos == 10;
 			{10, 13, 16, 19, 25, 30, 35, 40},
-			// now == 20;
+			// pos == 20;
 			{20, 22, 24, 25, 30, 35, 40},
-			// now == 30;
+			// pos == 30;
 			{30, 28, 27, 26, 25, 30, 35, 40},
 	};
 	
@@ -39,7 +39,7 @@ public class BOJ2157 {
 		int now = dice[idx];
 		for(int i = 0; i < 4; i++) {
 			if(isExist(pos[i] + now)) continue;
-			
+			if(pos[i])
 		}
 	}
 	
