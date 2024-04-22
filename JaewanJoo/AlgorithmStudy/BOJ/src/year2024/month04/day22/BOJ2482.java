@@ -3,15 +3,14 @@ package year2024.month04.day22;
 import java.io.*;
 
 public class BOJ2482 {
-private static final int CONST = 1_000_000_003;
-	
+	private static final int CONST = 1_000_000_003;
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
 		int n = Integer.parseInt(br.readLine());
 		int k = Integer.parseInt(br.readLine());
 
-		int[][] dp = new int[n + 1][n + 1];
+		int[][] dp = new int[n + 1][k + 1];
 		
 		for(int i = 1; i <= n; i++){
             dp[i][0] = 1;
@@ -19,7 +18,7 @@ private static final int CONST = 1_000_000_003;
         }
 		
 		for(int i = 3; i <= n; i++){
-            for(int j = 2; j <= (i + 1) / 2; j++){
+            for(int j = 2; j <= Math.min((i + 1) / 2, k); j++){
                 dp[i][j] = (dp[i - 1][j] % CONST + dp[i - 2][j - 1] % CONST) % CONST;
             }
         }
