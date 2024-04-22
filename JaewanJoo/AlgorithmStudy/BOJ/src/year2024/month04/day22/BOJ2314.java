@@ -4,7 +4,5 @@ import java.io.*;
 import java.util.*;
 
 public class BOJ2314 {
-	public static void main(String[] args) {
-		
-	}
+
 }
