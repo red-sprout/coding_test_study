@@ -46,7 +46,7 @@ public class BOJ15898 {
 			}
 			
 			for(int i = 1; i < 4; i++) {
-				candMat[t][i] = rotation(candMat[t][0]);
+				candMat[t][i] = rotation(candMat[t][i - 1]);
 			}
 		}
 		
