@@ -1,83 +1,49 @@
 package year2024.month05.day23;
-
+// 문자열 잘라내기
 import java.io.*;
 import java.util.*;
 
-class Node {
-	Map<Character, Node> children = new HashMap<>();
-	boolean isEnd = false;
-}
-
-class Trie {
-	Node root = new Node();
-	
-	public void insert(String key) {
-		Node node = this.root;
-		for(int i = 0; i < key.length(); i++) {
-			node = node.children.computeIfAbsent(key.charAt(i), k -> new Node());
-		}
-		node.isEnd = true;
-	}
-	
-	public boolean search(String key) {
-		Node node = this.root;
-		for(int i = 0; i < key.length(); i++) {
-			if(!node.children.containsKey(key.charAt(i))) return false;
-		}
-		return node.isEnd;
-	}
-	
-	public void delete() { 
-		Map<Character, Node> map = new HashMap<>();
-		for(char c : this.root.children.keySet()) {
-			map.put(c, this.root.children.get(c));
-		}
-		this.root.children = map;
-	}
-}
-
 public class BOJ2866 {
-	private static int strCnt;
+	private static int r, c;
+	private static char[][] strArr;
+	private static Set<String> set = new HashSet<>();
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		int r = Integer.parseInt(st.nextToken());
-		int c = Integer.parseInt(st.nextToken());
-		
-		Trie trie = new Trie();
+		r = Integer.parseInt(st.nextToken());
+		c = Integer.parseInt(st.nextToken());
+		strArr = new char[r][c];
 		for(int i = 0; i < r; i++) {
-			trie.insert(br.readLine());
+			strArr[i] = br.readLine().toCharArray();
 		}
 		
-		int cnt = 0;
-		boolean isOver = false;
-		while(cnt < r - 1) {
-			strCnt = 0;
-			dfs(trie.root);
-			isOver = (strCnt != r);
-			if(isOver) break;
-			trie.delete();
-			cnt++;
+		int left = 0;
+		int count = 0;
+		int right = r;
+		while(left <= right) {
+			int mid = (left + right) / 2;
+			initSet(mid);
+			if(set.size() == c) {
+				count = mid;
+				left = mid + 1;
+			} else {
+				right = mid - 1;
+			}
 		}
 		
-		System.out.println(cnt);
+		System.out.println(count);
 		br.close();
 	}
 	
-	public static void dfs(Node node) {
-		Deque<Node> stack = new LinkedList<>();
-		stack.add(node);
-		
-		while(!stack.isEmpty()) {
-			Node now = stack.pop();
-			if(now.isEnd) {
-				strCnt++;
-				continue;
+	public static void initSet(int start) {
+		set.clear();
+		for(int j = 0; j < c; j++) {
+			StringBuilder sb = new StringBuilder();
+			for(int i = start; i < r; i++) {
+				sb.append(strArr[i][j]).append("");
 			}
-			
-			for(char c : now.children.keySet()) {
-				stack.add(now.children.get(c));
-			}
+			set.add(sb.toString());
 		}
 	}
 }
