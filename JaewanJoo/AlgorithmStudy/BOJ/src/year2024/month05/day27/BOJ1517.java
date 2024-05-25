@@ -4,52 +4,65 @@ import java.io.*;
 import java.util.*;
 
 public class BOJ1517 {
-	private static int n, h;
-	private static int[] arr;
-	private static int[] tree;
+	private static int n;
+	private static long ans;
+	private static int[] arr, result;
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
 		
 		n = Integer.parseInt(br.readLine());
-		h = (int)(Math.ceil(Math.log(n) / Math.log(2)));
-		arr = new int[n + 1];
-		tree = new int[1 << (h + 1)];
+		arr = new int[n];
+		result = new int[n];
 		
 		st = new StringTokenizer(br.readLine());
-		for(int i = 1; i <= n; i++) {
+		for(int i = 0; i < n; i++) {
 			arr[i] = Integer.parseInt(st.nextToken());
 		}
 		
+		mergesort(0, n - 1);
 		
+		System.out.println(ans);
 		br.close();
 	}
 	
-	public static int query(int node, int start, int end, int left, int right) {
-		if(left > end || right < start) {
-			return 0;
+	public static void mergesort(int start, int end) {
+		if(start < end) {
+			int mid = (start + end) / 2;
+			mergesort(start, mid);
+			mergesort(mid + 1, end);
+			merge(start, mid, end);
 		}
-		
-		if(left <= start && end <= right) {
-			return tree[node];
-		}
-		
-		int lsum = query(node * 2, start, (start + end) / 2, left, right);
-		int rsum = query(node * 2, (start + end) / 2 + 1, end, left, right);
-		
-		return lsum + rsum;
 	}
 	
-	public static void update(int node, int start, int end, int index) {
-		if(index == start && index == end) {
-			tree[node] = 1;
-			return;
+	public static void merge(int start, int mid, int end) {
+		int left = start;
+		int right = mid + 1;
+		int idx = start;
+		
+		while(left <= mid && right <= end) {
+			if(arr[left] <= arr[right]) {
+				result[idx] = arr[left++];
+			} else {
+				result[idx] = arr[right++];
+				ans += mid - left + 1;
+			}
+			idx++;
 		}
 		
-		update(node * 2, start, (start + end) / 2, index);
-		update(node * 2 + 1, (start + end) / 2 + 1, end, index);
+		if(idx > mid) {
+			for(int i = right; i <= end; i++) {
+				result[idx++] = arr[i];
+			}
+		} else {
+			for(int i = left; i <= mid; i++) {
+				result[idx++] = arr[i];
+			}
+		}
 		
-		tree[node] = tree[node * 2] + tree[node * 2 + 1];
+		for(int i = start; i <= end; i++) {
+			arr[i] = result[i];
+		}
 	}
 }
