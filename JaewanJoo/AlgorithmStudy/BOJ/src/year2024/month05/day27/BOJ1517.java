@@ -43,15 +43,14 @@ public class BOJ1517 {
 		
 		while(left <= mid && right <= end) {
 			if(arr[left] <= arr[right]) {
-				result[idx] = arr[left++];
+				result[idx++] = arr[left++];
 			} else {
-				result[idx] = arr[right++];
+				result[idx++] = arr[right++];
 				ans += mid - left + 1;
 			}
-			idx++;
 		}
 		
-		if(idx > mid) {
+		if(left > mid) {
 			for(int i = right; i <= end; i++) {
 				result[idx++] = arr[i];
 			}
