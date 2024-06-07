@@ -17,7 +17,7 @@ public class BOJ16500 {
 		
 		for(int i = s.length() - 1; i >= 0; i--) {
 			for(int j = i + 1; j < s.length(); j++) {
-				if(dp[i] == 1 && set.contains(s.substring(i, j))) {
+				if(dp[j] == 1 && set.contains(s.substring(i, j))) {
 					dp[i] = 1;
 				}
 			}
