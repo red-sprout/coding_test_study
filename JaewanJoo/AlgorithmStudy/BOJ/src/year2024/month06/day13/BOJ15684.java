@@ -66,18 +66,9 @@ public class BOJ15684 {
 	}
 	
 	public static int getEnd(int row, int col, boolean[][] ladder) {
-		if(row == h) {
-			return col;
-		}
-		
-		if(col == 1) {
-			if(ladder[row][col]) col++;
-		} else if(col == n) {
-			if(ladder[row][col - 1]) col--;
-		} else {
-			if(ladder[row][col]) col++;
-			else if(ladder[row][col - 1]) col--;
-		}
+		if(row == h + 1) return col;
+		if(col < n && ladder[row][col]) col++;
+		else if(col > 1 && ladder[row][col - 1]) col--;
 		
 		return getEnd(row + 1, col, ladder);
 	}
