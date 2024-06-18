@@ -6,10 +6,12 @@ import java.util.*;
 public class BOJ16498 {
 	private static int a, b, c;
 	private static int[] cardA, cardB, cardC;
+	private static int ans = Integer.MAX_VALUE;
 	
 	public static void main(String[] args) throws IOException {
 		input();
-		
+		selectNum();
+		System.out.println(ans);
 	}
 	
 	public static void input() throws IOException {
@@ -47,8 +49,36 @@ public class BOJ16498 {
 	public static int penalty(int x, int y, int z) {
 		return Math.abs(Math.max(x, (Math.max(y, z))) - Math.min(x, (Math.min(y, z))));
 	}
+	
+	public static void selectNum() {
+		for(int i = 0; i < a; i++) {
+			int selectA = cardA[i];
+			int selectB = binarySearch(selectA, cardB);
+			int selectC1 = binarySearch(selectA, cardC);
+			int selectC2 = binarySearch(selectB, cardC);
+			
+			int tmp = Math.min(penalty(selectA, selectB, selectC1), penalty(selectA, selectB, selectC2));
+			ans = Math.min(ans, tmp);
+		}
+	}
 
-	public static int binarySearch() {
+	public static int binarySearch(int x, int[] arr) {
+		int left = 0, mid = 0;
+		int right = arr.length - 1;
+		int result = arr[mid];
 		
+		while(left <= right) {
+			mid = (left + right) / 2;
+			if(arr[mid] == x) return x;
+			if(arr[mid] > x) {
+				right = mid - 1;
+			} else {
+				left = mid + 1;
+			}
+			
+			if(Math.abs(x - result) > Math.abs(x - arr[mid])) result = arr[mid];
+		}
+		
+		return result;
 	}
 }
