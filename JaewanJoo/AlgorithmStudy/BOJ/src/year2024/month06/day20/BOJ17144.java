@@ -1,10 +1,7 @@
 package year2024.month06.day20;
 // 미세먼지 안녕!
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 public class BOJ17144 {
 	private static int r, c, t;
