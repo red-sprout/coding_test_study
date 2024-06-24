@@ -62,7 +62,7 @@ public class BOJ9376 {
 	
 	public static int[][] bfs(Prisoner prisoner) {
 		int[][] result = new int[h + 2][w + 2];
-		visited = new boolean[h + 2][w + w];
+		visited = new boolean[h + 2][w + 2];
 		PriorityQueue<Prisoner> pq = new PriorityQueue<>();
 		
 		pq.add(prisoner);
