@@ -47,8 +47,7 @@ public class BOJ8980 {
 		Arrays.sort(delivery);
 		
 		int result = 0;
-		for(int i = 0; i < m; i++) {
-			Delivery d = delivery[i];
+		for(Delivery d : delivery) {
 			int max = Integer.MAX_VALUE;
 			for(int j = d.start; j < d.end; j++) {
 				max = Math.min(max, weight[j]);

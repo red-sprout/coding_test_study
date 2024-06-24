@@ -58,8 +58,6 @@ public class BOJ15659 {
 			orderlist.add(i);
 		}
 		
-		System.out.println(numlist);
-		System.out.println(orderlist);
 		for(int i = 0; i < orderlist.size(); i++) {
 			if(orderlist.get(i) < 2) continue;
 			if(orderlist.get(i) == 2) {
