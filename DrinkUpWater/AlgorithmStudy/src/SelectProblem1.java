@@ -1,7 +1,6 @@
 import java.io.*;
 
-public class Main {
-	
+public class SelectProblem1 {
 	static int[] stack;
 	static int index = 0;
 	static int max;

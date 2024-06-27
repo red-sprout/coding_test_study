@@ -7,8 +7,6 @@ import java.util.StringTokenizer;
 public class BOJ10773 {
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st;
-		StringBuilder sb = new StringBuilder();
 
 		int n = Integer.parseInt(br.readLine());
 		Stack<Integer> s = new Stack<>();

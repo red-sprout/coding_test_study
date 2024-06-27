@@ -7,7 +7,6 @@ public class BOJ2563 {
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
-		StringBuilder sb = new StringBuilder();
 
 		boolean[][] bArr = new boolean[100][100];
 		
