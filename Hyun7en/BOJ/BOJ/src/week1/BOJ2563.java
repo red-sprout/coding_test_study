@@ -35,7 +35,7 @@ public class BOJ2563 {
                 }
             }
         }
-		 System.out.println(area;
+		 System.out.println(area);
 		
 	}
 }
