@@ -37,7 +37,7 @@ public class BOJ10799 {
 			}
 		}
 		
-		System.out.println(result;
+		System.out.println(result);
 		br.close();
 		
 		
