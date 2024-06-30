@@ -36,6 +36,7 @@ public class BOJ2563 {
             }
         }
 		 System.out.println(area);
+		 br.close();
 		
 	}
 }
