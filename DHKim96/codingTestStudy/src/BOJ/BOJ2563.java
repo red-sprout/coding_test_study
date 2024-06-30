@@ -5,14 +5,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class Main {
-	
+public class BOJ2563 {
 	public static void main(String[] args) throws NumberFormatException, IOException {
-		// 그냥 100개의 1x1 박스가 있는 도화지(boolean 형 2차원 배열)에 검은 영역을 true 로 바꾼다고 생각하고 true 상태인 박스의 갯수를 계산하면 됨.
+		// 100개의 1x1 박스가 있는 도화지(boolean 형 2차원 배열)에 검은 색종이 영역을 true 로 바꾼다고 생각하고 true 상태인 박스의 갯수를 계산하면 됨.
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		 int total = 0;  //검은 영역의 넓이
 	        int n = Integer.parseInt(br.readLine());  //색종이 개수
-	        boolean[][] arr = new boolean[100][100];  //100x100 도화지. boolean형의 기본값은 false.
+	        boolean[][] arr = new boolean[100][100];  //100x100 도화지. boolean 형의 기본값은 false(=흰색 영역).
 	        for (int i = 0; i < n; i++) {
 	            StringTokenizer st = new StringTokenizer(br.readLine());
 	            int x = Integer.parseInt(st.nextToken());
@@ -22,9 +21,9 @@ public class Main {
 	            // * x+10, y+10 의 영역을 계산하면 박스가 11x11 개가 되버림
 	            for (int j = x; j < x+10; j++) {
 	                for (int k = y; k < y+10; k++) {
-	                	//불린형 이차원 배열이 false일 경우(즉 흰색일 경우) 카운트함
+	                	//불린형 이차원 배열이 false(=흰색)일 경우 카운트함
 	                    if (!arr[j][k]) {
-	                    	// 이미 검은 영역을 또 카운트하지 않도록 카운트하면서 상태값을 true로 변경
+	                    	// 이미 검은 영역을 또 카운트하지 않도록 카운트하면서 상태값을 true(=검은색)로 변경
 	                    	total++;
 	                        arr[j][k] = true;
 	                    }
@@ -34,6 +33,5 @@ public class Main {
 	        br.close();
 	        System.out.print(total);
 	}
-	
 	
 }
