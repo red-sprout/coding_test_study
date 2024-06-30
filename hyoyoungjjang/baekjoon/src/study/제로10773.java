@@ -33,5 +33,6 @@ public class 제로10773 {
 		}
 		
 		System.out.println(sum);
+		br.close();
 	}
 }

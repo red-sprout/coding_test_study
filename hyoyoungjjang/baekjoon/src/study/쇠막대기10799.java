@@ -30,6 +30,7 @@ public class 쇠막대기10799 {
 			}
 		 }
 		 System.out.println(result);
+		 br.close();
 	 }
 }
 //2024-06-25 21:50

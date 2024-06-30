@@ -44,6 +44,6 @@ public class 후위표기식1935 {
 			}
 		}
 		System.out.printf("%.2f", s.pop());
-		
+		br.close();
 	} 
 }
