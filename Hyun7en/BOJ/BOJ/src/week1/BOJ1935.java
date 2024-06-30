@@ -38,22 +38,22 @@ public class BOJ1935 {
 					case '+':
 						result = n2 + n1;
 						stack.push(result);
-						continue;
+						break;
 						
 					case '-':
 						result = n2 - n1;
 						stack.push(result);
-						continue;
+						break;
 						
 					case '*':
 						result = n2 * n1;
 						stack.push(result);
-						continue;
+						break;
 						
 					case '/':
 						result = n2 / n1;
 						stack.push(result);
-						continue;
+						break;
 					
 					}
 				}
