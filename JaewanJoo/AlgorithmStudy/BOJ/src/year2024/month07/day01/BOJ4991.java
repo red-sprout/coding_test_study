@@ -4,10 +4,9 @@ import java.io.*;
 import java.util.*;
 
 public class BOJ4991 {
-	private static int h, w, ans;
+	private static int h, w, ans, checked;
 	private static int[][] dist;
 	private static char[][] map;
-	private static boolean[] checked;
 	private static boolean[][] visited;
 	
 	private static int[] dr = {-1, 1, 0, 0};
@@ -63,8 +62,7 @@ public class BOJ4991 {
 		dist = new int[size][size];
 		initDist(size);
 		fwMovement(size);
-		checked = new boolean[size];
-		checked[idx] = true;
+		checked = 1 << idx;
 		dfs(1, 0, size, idx);
 	}
 	
@@ -87,11 +85,11 @@ public class BOJ4991 {
 		}
 
 		for(int i = 0; i < size; i++) {
-			if(checked[i]) continue;
+			if((checked & (1 << i)) != 0) continue;
 			if(dist[idx][i] == INF) continue;
-			checked[i] = true;
+			checked |= (1 << i);
 			dfs(cnt + 1, total + dist[idx][i], size, i);
-			checked[i] = false;
+			checked &= ~(1 << i);
 		}
 	}
 	
