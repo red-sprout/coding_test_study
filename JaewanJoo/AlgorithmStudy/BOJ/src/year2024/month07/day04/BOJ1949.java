@@ -34,10 +34,6 @@ public class BOJ1949 {
 			 tree[i] = new Node(Integer.parseInt(info[i - 1]));
 		 }
 		 
-		 for(int i = 0; i <= n; i++) {
-			 Arrays.fill(dp[i], -1);
-		 }
-		 
 		 for(int i = 0; i < n - 1; i++) {
 			 info = br.readLine().split(" ");
 			 int a = Integer.parseInt(info[0]);
@@ -46,25 +42,20 @@ public class BOJ1949 {
 			 tree[b].add(a);
 		 }
 		 
-		 System.out.println(Math.max(dfs(1, 0), dfs(1, 1) + tree[1].data));
+		 dfs(1);
+		 System.out.println(Math.max(dp[1][0], dp[1][1]));
 		 br.close();
 	}
 	
-	public static int dfs(int idx, int flag) {
-		if(dp[idx][flag] != -1) return dp[idx][flag];
-		
+	public static void dfs(int idx) {
 		tree[idx].visited = true;
-		dp[idx][flag] = 0;
+		dp[idx][0] = 0;
+		dp[idx][1] = tree[idx].data;
 		for(int i : tree[idx].children) {
 			if(tree[i].visited) continue;
-			if(flag == 1) {
-				dp[idx][flag] += dfs(i, 0);
-			} else {
-				dp[idx][flag] += Math.max(dfs(i, 1) + tree[i].data, dfs(i, 0));
-			}
+			dfs(i);
+			dp[idx][0] += Math.max(dp[i][0], dp[i][1]);
+			dp[idx][1] += dp[i][0];
 		}
-		tree[idx].visited = false;
-		
-		return dp[idx][flag];
 	}
 }
