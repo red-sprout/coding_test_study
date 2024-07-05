@@ -1,4 +1,4 @@
-package BOJ;
+package BOJ.dataStructure.queue;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class Main {
-	
+public class BOJ11866 {
+
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
@@ -133,6 +133,4 @@ public class Main {
 //        
 //        System.out.print(">");
 //	}
-	
-	
 }
