@@ -14,7 +14,7 @@ public class 최대힙11279 {
 		
 		//우선순위 큐 
 		PriorityQueue<Integer> que = new PriorityQueue<>(Collections.reverseOrder());
-		//Collections.reverseOrder() <- 내림차순으로 변경
+		//Collections.reverseOrder() -> Comparator 반환 -> compare 메서드 실행 내림차순 
 		
 		for(int i = 0; i < n; i++) {
 			int num = Integer.parseInt(br.readLine());
