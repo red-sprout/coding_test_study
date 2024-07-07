@@ -1,12 +1,11 @@
-package BOJ;
+package BOJ.dataStructure.queue;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class Main {
-	
+public class BOJ11501 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
@@ -14,7 +13,7 @@ public class Main {
 		int T = Integer.parseInt(br.readLine());
 	
 		// 2. 테스트 케이스마다 최대 이익을 구하기 위한 반복문 구현
-		// 테스트 케이스를 처리할 때 주로 사용되는 람다 표현식
+		// 테스트 케이스를 반복할 때 유용한 표현식. 반복문의 조건과 감소 연산을 하나의 표현식으로 처리 가능
 		while(T-- > 0) {
 			// 3. 날 수 저장
 			int N = Integer.parseInt(br.readLine());
@@ -62,7 +61,4 @@ public class Main {
 		
 		return maxProfit;
 	}
-	
-	
-	
 }
