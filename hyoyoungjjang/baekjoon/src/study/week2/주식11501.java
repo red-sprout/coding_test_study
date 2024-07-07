@@ -23,7 +23,7 @@ public class 주식11501 {
 			for(int j = 0;  j < dayPriceStr.length; j++){				
 				dayPrice.addLast(Integer.parseInt(dayPriceStr[j]));	
 			}
-		
+			
 		    System.out.println(maxProfit(dayPrice));
 			
 		}
