@@ -8,7 +8,7 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 /*
- * ***** 트럭 *****
+ * ****** 트럭 ******
  * <문제>
  * 하나의 차선 n개의 트록 건넘
  * 트럭 순서 못 바꿈(트럭 무게 같지 않을 수 있음)
