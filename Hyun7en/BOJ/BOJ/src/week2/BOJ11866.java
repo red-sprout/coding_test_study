@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /*
- * ***** 요세푸스 문제 0 *****
+ * ****** 요세푸스 문제 0 ******
  * 
  * <문제>
  * 1~N(N명의 사람이 원형으로 앉음)
