@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 /*
- * ***** 주식 *****
+ * ****** 주식 ******
  * 
  * <문제>
  * 세 가지 행동
