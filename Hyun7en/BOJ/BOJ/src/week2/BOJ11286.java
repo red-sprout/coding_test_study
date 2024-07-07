@@ -1,7 +1,7 @@
 package week2;
 
 /*
- * ****** 최대 힙 ******
+ * ****** 절댓값 힙 ******
  * 
  * <문제>
  * 
@@ -9,7 +9,8 @@ package week2;
  * 
  * <출력>
  */
-public class BOJ11279 {
+public class BOJ11286 {
+	
 	public static void main(String[] args) {
 		
 	}
