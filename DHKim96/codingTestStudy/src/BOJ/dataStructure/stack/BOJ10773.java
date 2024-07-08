@@ -1,4 +1,4 @@
-package BOJ;
+package BOJ.dataStructure.stack;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -10,7 +10,6 @@ public class BOJ10773 {
 		
 		public static void main(String[] args) throws NumberFormatException, IOException {
 			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 			
 			int k = Integer.parseInt(br.readLine());
 			
