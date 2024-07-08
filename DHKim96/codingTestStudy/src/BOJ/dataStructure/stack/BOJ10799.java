@@ -1,4 +1,4 @@
-package BOJ;
+package BOJ.dataStructure.stack;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,7 +30,6 @@ public class BOJ10799 {
 		for(int i = 0; i < brackets.length(); i++) {
 			if(brackets.charAt(i) == '(') {
 				deque.push('('); 
-				continue;
 			} else {
 				deque.pop();
 				// 레이저일 경우

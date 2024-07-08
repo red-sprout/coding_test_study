@@ -44,5 +44,6 @@ public class BOJ1935 {
 		}
 		
 		System.out.printf("%.2f", s.pop());
+		br.close();
 	}
 }
