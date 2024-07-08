@@ -1,3 +1,4 @@
+package src.week2;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,10 +15,9 @@ public class S11279 {
 		
 		for(int i = 0 ; i < n ; i++) {
 			int x = Integer.parseInt(bf.readLine());
-			
+		
 			if(x!=0) {
 				pQ.add(x);
-
 			} else {
 				if(pQ.isEmpty()) {
 					System.out.println(0);
