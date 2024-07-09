@@ -46,6 +46,7 @@ public class S10816_HashMap {
 	        for (int i = 0; i < n; i++) {
 	            int num = Integer.parseInt(st.nextToken());
 	            map.put(num, map.getOrDefault(num, 0) + 1);
+	            System.out.println(map);
 	        }
 	        
 	        // m 세팅
