@@ -28,6 +28,7 @@ public class BOJ10799 {
 				
 			}
 		}
-		System.out.println(sum);	
+		System.out.println(sum);
+		br.close();
 	}
 }
