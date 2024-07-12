@@ -14,7 +14,7 @@ public class 재귀함수가뭔가요17478 {
 		
 		n = Integer.parseInt(br.readLine());
 		
-		sb.append("어느 한 컴퓨터공학과 학생이 유명한 교수님을 찾아가 물었다.");
+		sb.append("어느 한 컴퓨터공학과 학생이 유명한 교수님을 찾아가 물었다.\n");
 		
 		function(0);
 		
@@ -45,8 +45,8 @@ public class 재귀함수가뭔가요17478 {
 		sb.append(underBar + "마을 사람들은 모두 그 선인에게 수많은 질문을 했고, 모두 지혜롭게 대답해 주었지.\n");
 		sb.append(underBar + "그의 답은 대부분 옳았다고 하네. 그런데 어느 날, 그 선인에게 한 선비가 찾아와서 물었어.\"\n");
 		
-		//재귀함수 호출하면서 ++count
-		function(++count);
+		//재귀함수 호출하면서 count 증가
+		function(count + 1);
 		
 		sb.append(underBar + "라고 답변하였지.\n");
 	}
