@@ -1,10 +1,9 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class Main {
+public class BOJ16926 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
@@ -30,24 +29,24 @@ public class Main {
 		 for (int i = 0; i < r; i++) {
 	            for (int j = 0; j < line; j++) {
 	                int tmp = arr[j][j]; //시작값 저장
-	                // 한바퀴가 다 돌았으면 다시 line_count를 초기화 시켜줘야 한다
-	                // 1. 오른쪽상단 -> 왼쪽상단
+	               
+	                //오른쪽상단 -> 왼쪽상단
 	                for (int k = j + 1; k < m - j; k++) {
 	                    arr[j][k - 1] = arr[j][k];
 	                }
-	                // 2. 오른쪽하단 -> 오른쪽상단
+	                //오른쪽하단 -> 오른쪽상단
 	                for (int k = j + 1; k < n - j; k++) {
 	                    arr[k - 1][m - j - 1] = arr[k][m - j - 1];
 	                }
-	                // 3. 왼쪽하단 -> 오른쪽하단
+	                //왼쪽하단 -> 오른쪽하단
 	                for (int k = m - 2 - j; k >= j; k--) {
 	                    arr[n - 1 - j][k + 1] = arr[n - 1 - j][k];
 	                }
-	                // 4. 왼쪽상단 -> 왼쪽하단
+	                //왼쪽상단 -> 왼쪽하단
 	                for (int k = n - j - 2; k >= j; k--) {
 	                    arr[k + 1][j] = arr[k][j];
 	                }
-	                // 마무리 시작값을 끼어놓으면 한 라인 끝
+	                // 시작값 넣기
 	                arr[j + 1][j] = tmp;
 	            }
 	        }
