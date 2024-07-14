@@ -46,8 +46,51 @@ public class BOJ16926 {
 		int M = Integer.parseInt(st.nextToken());
 		int R = Integer.parseInt(st.nextToken()); //회전의 수
 		
+		int[][] arr = new int[N][M];
+		for(int i=0; i<N; i++) {
+			st = new StringTokenizer(br.readLine());
+			for(int j=0; j<M; j++) {
+				arr[i][j] = Integer.parseInt(st.nextToken());
+			}
+		}
 		
+		for(int i=0; i<R; i++) {
+        	// 가장 큰 사각형부터 안으로 한 번씩 돌리기
+			for(int j=0; j< Math.min(N, M)/2; j++) {
+				
+				int temp = arr[j][j];  //각 사각형의 왼쪽 위 값 저장
+				
+				// left
+				for(int k=j; k<M-j-1; k++) {
+					arr[j][k] = arr[j][k+1];
+				}
+				// up
+				for(int k=j; k<N-1-j; k++) {
+					arr[k][M-j-1] = arr[k+1][M-j-1];
+				}
+				// right
+				for(int k=M-j-1; k>j; k--) {
+					arr[N-1-j][k] = arr[N-1-j][k-1];
+				}
+				// down
+				for(int k=N-j-1; k>j; k--) {
+					arr[k][j] = arr[k-1][j];
+				}
+				arr[j+1][j] = temp;
+			}
+		}
 		
+		StringBuilder sb = new StringBuilder();
+		
+		for(int i=0; i<N; i++) {
+			for(int j=0; j<M; j++) {
+				sb.append(arr[i][j]).append(" ");
+			}
+			sb.append("\n");
+		}
+		
+		br.close();
+		System.out.println(sb);
 		
 		
 	}
