@@ -131,9 +131,10 @@ public class S10816_binarySearch {
     }
     
     public static void print(int[] arr) {
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < arr.length; i++) {
-            System.out.print(arr[i] + " ");
+            sb.append(arr[i]).append(" ");
         }
-        System.out.println();
+        System.out.println(sb.toString());
     }
 }

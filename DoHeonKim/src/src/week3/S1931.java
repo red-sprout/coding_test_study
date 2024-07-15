@@ -15,7 +15,7 @@ public class S1931 {
 		int n = Integer.parseInt(bf.readLine());
 		
 		int count = 0;
-		//이렇게 하면 중복 체크를 할 수가 없음
+//		//이렇게 하면 중복 체크를 할 수가 없음
 //		int[] startArr = new int[n];
 //		int[] endArr = new int[n];		
 //		
@@ -33,7 +33,7 @@ public class S1931 {
 //		
 //		for(int i = 0 ; i < n; i++) {
 //			if(i > 0) {			
-//				if(endTime < startArr[i]) {
+//				if(endTime <= startArr[i]) {
 //					count++;
 //					endTime = endArr[i];
 //				}
