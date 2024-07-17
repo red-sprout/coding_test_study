@@ -6,24 +6,38 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class S1074 {
+	static int count = 0;
+
 	public static void main(String[] args) throws IOException {
-		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(bf.readLine());
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int N = Integer.parseInt(st.nextToken());
+		int r = Integer.parseInt(st.nextToken()); //행
+		int c = Integer.parseInt(st.nextToken()); //열
+		int size = (int) Math.pow(2, N); //한 변의 사이즈
 		
-		int n = Integer.parseInt(st.nextToken());
-		int r = Integer.parseInt(st.nextToken());
-		int c = Integer.parseInt(st.nextToken());
-		
-		if(n<1) {
-			int[][] arr = new int[2][2];
-			int count = 0 ;
-			for(int i = 0 ; i < 2; i++) {
-				for(int j = 0 ; j < 2; j++) {
-					arr[i][j]=count++;
-				}
-			}
-		}
-		
+		find(size, r, c);
+		System.out.println(count);
 	}
 
+	private static void find(int size, int r, int c) {
+		if(size == 1)
+			return;
+		
+		if(r < size/2 && c < size/2) {
+			find(size/2, r, c);
+		}
+		else if(r < size/2 && c >= size/2) {
+			count += size * size / 4;
+			find(size/2, r, c - size/2);
+		}
+		else if(r >= size/2 && c < size/2) {
+			count += (size * size / 4) * 2;
+			find(size/2, r - size/2, c);
+		}
+		else {
+			count += (size * size / 4) * 3;
+			find(size/2, r - size/2, c - size/2);
+		}
+	}
 }
