@@ -49,6 +49,6 @@ public class 트럭13335 {
 		}
 			
 		System.out.println(time);
-		
+		br.close();
 	}
 }
