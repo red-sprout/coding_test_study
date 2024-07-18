@@ -35,6 +35,7 @@ public class BOJ10816 {
 			} else {
 				map.put(arr1[i], map.get(arr1[i]) + 1);
 			}
+//			map.getOrDefault(map, null) 사용
 		}
 		//숫자 출력
 		for (int i = 0; i < arr2.length; i++) {
