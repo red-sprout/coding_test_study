@@ -19,7 +19,9 @@ import java.util.Queue;
  * remove() : 큐가 비어 있으면 NoSuchElementException을 던짐. 예외 처리 필요.
  */
 public class BOJ11866 {
-	
+	//1 2 3 4 5 6 7
+	//7, 3
+	//3 6 2 7 5 1 4
 	public static void main(String[] args) throws IOException {
 	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	    String[] inputs = br.readLine().split(" ");

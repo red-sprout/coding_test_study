@@ -1,68 +1,82 @@
 package BOJ;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.StringTokenizer;
 
 public class Main {
-	
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		// 1. 테스트케이스 수 저장
-		int T = Integer.parseInt(br.readLine());
-	
-		// 2. 테스트 케이스마다 최대 이익을 구하기 위한 반복문 구현
-		// 테스트 케이스를 처리할 때 주로 사용되는 람다 표현식
-		while(T-- > 0) {
-			// 3. 날 수 저장
-			int N = Integer.parseInt(br.readLine());
-			StringTokenizer st = new StringTokenizer(br.readLine());
-			// 4. 주가 배열 선언
-			int[] stockPrices = new int[N];
-			
-			// 5. 반복문을 통해 주가배열에 주가 넣기
-			for(int i = 0; i < N; i++) {
-				stockPrices[i] = Integer.parseInt(st.nextToken());
-			}
-			
-			// 6. 최대 이익을 담을 변수 생성
-			// 날의 수를 나타내는 자연수 N이 1,000,000 이고 날 별 주가가 모두 10,000일 때 최대 이익은 32비트 int형의 범위를 벗어나기에
-			// 64비트 long 형으로 선언
-			long maxProfit = 0;
-			
-			maxProfit = calcMaxProfit(maxProfit, stockPrices, N);
-			
-			System.out.println(maxProfit);
-		}
-		
-		br.close();
-			
-	}
-	
-	public static long calcMaxProfit(long maxProfit, int[] stockPrices, int N) {
-		
-		// 7. 최대 주가를 담을 변수 생성
-		int maxPrice = 0;
-		
-		// 8. 최대 이익을 구하기 위한 역순탐색 반복문
-		// 최대 이익을 구하기 위해서는 미래의 최대 주가를 예측하고 최대 주가일 때 주식을 팔아야 가능
-		// 아주 다행스럽게도 홍준이는 미래 예측 능력을 지녀 미래의 주가를 알 수 있기에 미래에서 현 시점으로 역순하며 주가 비교 가능
-		for(int i = N - 1; i >= 0; i-- ) {
-			// 9.  최대 주가 갱신
-			if(stockPrices[i] > maxPrice) {
-				maxPrice = stockPrices[i];
-			}
-			
-			// 10. 이익 누적
-			// 현 시점(i) 일 때의 이익 계산하여 추가
-			maxProfit += maxPrice - stockPrices[i];
-		}
-		
-		return maxProfit;
-	}
-	
-	
-	
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        
+        int n = Integer.parseInt(st.nextToken()); // 행의 수
+        int m = Integer.parseInt(st.nextToken()); // 열의 수
+        int r = Integer.parseInt(st.nextToken()); // 회전 횟수
+        
+        int[][] matrix = new int[n][m]; // n x m 크기의 2차원 배열 생성
+        
+        for (int i = 0; i < n; i++) {
+            st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < m; j++) {
+                matrix[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
+        
+        rotateMatrix(matrix, n, m, r);
+        
+        // StringBuilder를 이용하여 결과 출력
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                sb.append(matrix[i][j]).append(' ');
+            }
+            sb.append('\n');
+        }
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+        br.close();
+    }
+
+    public static void rotateMatrix(int[][] matrix, int n, int m, int r) {
+        int layers = Math.min(n, m) / 2; // 회전해야 할 겹의 수
+
+        for (int i = 0; i < layers; i++) {
+            int layerHeight = n - 2 * 1;
+            int layerWidth = m - 2 * 1;
+            int numElements = 2 * (layerHeight + layerWidth - 2);
+            int effectiveRotations = r % numElements;
+
+            for (int rotation = 0; rotation < effectiveRotations; rotation++) {
+                int temp = matrix[i][i]; // 첫 번째 요소를 임시로 저장
+
+                // 왼쪽 열 위로 이동
+                for (int j = i; j < n - i - 1; j++) {
+                    matrix[j][i] = matrix[j + 1][i];
+                }
+
+                // 하단 행 왼쪽으로 이동
+                for (int j = i; j < m - i - 1; j++) {
+                    matrix[n - i - 1][j] = matrix[n - i - 1][j + 1];
+                }
+
+                // 오른쪽 열 아래로 이동
+                for (int j = n - i - 1; j > i; j--) {
+                    matrix[j][m - i - 1] = matrix[j - 1][m - i - 1];
+                }
+
+                // 상단 행 오른쪽으로 이동
+                for (int j = m - i - 1; j > i + 1; j--) {
+                    matrix[i][j] = matrix[i][j - 1];
+                }
+
+                matrix[i][i + 1] = temp;
+            }
+        }
+    }
 }
+
