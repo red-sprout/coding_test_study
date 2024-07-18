@@ -3,8 +3,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class Main {
-	private static int count = 0;
+public class BOJ1074 {
+private static int count = 0;
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -46,5 +46,5 @@ public class Main {
 			count += (a/2) * (a/2) * 3;
 			cal(a/2, r - (a/2), c - (a/2));
 		}
-    }
+    }	
 }
