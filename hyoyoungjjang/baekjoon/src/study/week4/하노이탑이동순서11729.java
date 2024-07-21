@@ -26,6 +26,7 @@ public class 하노이탑이동순서11729 {
 		// 1 2 3 은 장대이며 start : 출발지, mid : 이동해야하는 장소, to : 목적지 
  		hanoi(n, 1, 2, 3);
  		
+ 		br.close();
  		System.out.println(sb);
 	}
 	

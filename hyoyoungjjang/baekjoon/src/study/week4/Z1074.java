@@ -22,7 +22,7 @@ public class Z1074 {
 		int side = (int) Math.pow(2, n); // 한 변의 길이
 		
 		find(side, r, c);
-		
+		br.close();
 		System.out.println(count);
 	}
 	
