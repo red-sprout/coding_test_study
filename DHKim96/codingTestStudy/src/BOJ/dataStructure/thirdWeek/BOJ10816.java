@@ -56,7 +56,7 @@ public class BOJ10816 {
 	    	
 	    	bw.write(result.toString().trim());
 	    	bw.flush();
-	 
+	    	bw.close();
 	    	br.close();
 	    }
 	}

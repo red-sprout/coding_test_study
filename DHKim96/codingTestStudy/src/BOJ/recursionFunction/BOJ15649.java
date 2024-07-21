@@ -1,11 +1,11 @@
-package BOJ;
+package BOJ.recursionFunction;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Scanner;
 
-public class Main {
+public class BOJ15649 {
 	/*
 	 * 백준 no.15649 : N과 M(1)
 	 * 
@@ -105,4 +105,3 @@ public class Main {
 		}
 	}
 }
-
