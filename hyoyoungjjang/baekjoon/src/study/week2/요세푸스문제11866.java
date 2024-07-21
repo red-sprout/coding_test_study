@@ -25,7 +25,7 @@ public class 요세푸스문제11866 {
 		for(int i = 1; i <= n; i++) {
 			q.add(i);
 		}
-		
+	
 		sb.append("<");
 		
 		while(!q.isEmpty()) {
