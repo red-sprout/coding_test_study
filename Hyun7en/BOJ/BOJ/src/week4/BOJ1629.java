@@ -33,6 +33,7 @@ public class BOJ1629 {
 	        int C = Integer.parseInt(st.nextToken());
 
 	        //A를 B번 곱한 수를 C로 나눈 나머지
+	        br.close();
 	        System.out.println(pow(A, B, C));
 	    }
 	    

@@ -24,8 +24,6 @@ import java.util.StringTokenizer;
  */
 
 public class BOJ1074 {
-
-	private static int N,r,c,result = 0;
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -37,21 +35,40 @@ public class BOJ1074 {
 		int r = Integer.parseInt(st.nextToken());//행
 		int c = Integer.parseInt(st.nextToken());//열
 		
-		zArray(0,0,(int)Math.pow(2, N));
+		int size = (int)Math.pow(2, N);
+		
+		br.close();
+		System.out.println(zArray(r,c,size));
+		
+		
 	}
 	
-	private static void zArray(int nr, int nc, int size) {
-		if(size == 1) {
-			System.out.println(result);
-			return;
-		}
-		
-		int newSize =  size/2;
-		
-		if(r < nr + newSize && c < nc + newSize) {
-			
-		}
-		
+	private static int zArray(int r, int c, int size) {
+		int result = 0;
+        int row = r;
+        int col = c;
+
+        for (int i = size / 2; i > 0; i /= 2) {
+            // 각 사분면에 대해 값을 더해줌
+            if (row < i && col < i) {
+                // 1사분면
+            } else if (row < i && col >= i) {
+                // 2사분면
+                result += i * i;
+                col -= i;
+            } else if (row >= i && col < i) {
+                // 3사분면
+                result += 2 * i * i;
+                row -= i;
+            } else {
+                // 4사분면
+                result += 3 * i * i;
+                row -= i;
+                col -= i;
+            }
+        }
+
+        return result;
 		
 	}
 	
