@@ -20,7 +20,7 @@ import java.util.StringTokenizer;
  * <출력>
  * r행 c열을 몇 번째로 방문했는지 출력한다.
  * 
- * 분할 정복 / 재귀
+ * 분할 정복 / 재귀.
  */
 
 public class BOJ1074 {
