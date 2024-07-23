@@ -1,4 +1,4 @@
-package assignment;
+package year2024.month07.third;
 // 낚시왕
 import java.io.*;
 import java.util.*;
