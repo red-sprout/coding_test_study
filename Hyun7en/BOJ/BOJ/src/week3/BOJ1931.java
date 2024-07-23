@@ -42,9 +42,7 @@ public class BOJ1931 {
 		// 회의 시작 시간, 끝나는 시간 저장할 배열
         int[][] times = new int[N][2];
         
-		//둘째 줄 ~ N + 1 줄(각 회의의 시작시간, 끝나는 시간)\
-		Map<Integer, Integer> map = new HashMap<>();
-		
+		//둘째 줄 ~ N + 1 줄(각 회의의 시작시간, 끝나는 시간)
 		for(int i = 0; i < N; i++) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
 			times[i][0] = Integer.parseInt(st.nextToken()); // 시작 시간

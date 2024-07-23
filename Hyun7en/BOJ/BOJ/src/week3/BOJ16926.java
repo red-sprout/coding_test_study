@@ -47,9 +47,9 @@ public class BOJ16926 {
 		int R = Integer.parseInt(st.nextToken()); //회전의 수
 		
 		int[][] arr = new int[N][M];
-		for(int i=0; i<N; i++) {
+		for(int i = 0; i < N; i++) {
 			st = new StringTokenizer(br.readLine());
-			for(int j=0; j<M; j++) {
+			for(int j = 0; j < M; j++) {
 				arr[i][j] = Integer.parseInt(st.nextToken());
 			}
 		}
