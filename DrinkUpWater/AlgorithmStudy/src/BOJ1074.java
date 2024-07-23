@@ -20,6 +20,7 @@ private static int count = 0;
 		
 		System.out.println(count);
 		
+		br.close();
 	}
 	
 	private static void cal(int a, int r, int c) {

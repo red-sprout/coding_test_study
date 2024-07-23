@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class Main {
+public class BOJ1260 {
 	private static int n, m, v;
 	private static int[][] dfs, bfs;
 	private static boolean[] visited;
@@ -20,7 +20,9 @@ public class Main {
 		n = Integer.parseInt(st.nextToken());
 		m = Integer.parseInt(st.nextToken());
 		v = Integer.parseInt(st.nextToken());
-
+		
+		//dfs 깊이 우선 탐색
+		//bfs 너비 우선 탐색
 		dfs = new int[n+1][n+1];
 		bfs = new int[n+1][n+1];
 		visited = new boolean[n+1];
@@ -58,11 +60,11 @@ public class Main {
 		queue.add(v);
 		
 		while(!queue.isEmpty()) {
-			int tmp = queue.poll();
-			sb.append(tmp + " ");
+			v = queue.poll();
+			sb.append(v + " ");
 			
 			for (int i = 1; i <= n; i++) {
-				if (bfs[tmp][i] == 1 && !visited[i]) {
+				if (bfs[v][i] == 1 && !visited[i]) {
 					visited[i] = true;
 					queue.add(i);
 				}

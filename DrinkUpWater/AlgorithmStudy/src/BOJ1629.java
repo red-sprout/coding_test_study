@@ -9,10 +9,10 @@ public class BOJ1629 {
 		StringTokenizer st;
 		StringBuilder sb = new StringBuilder();
 
-		// 처음 주어진 n m r
-		//모듈로 곱셈 ...
+		//처음 주어진 n m r
+		//모듈러 곱셈 ...
 		//10^11%12 = (10^5 x 10^6) %12 
-		// (10^5 x 10^6) %12 = ((10^5%12) x (10^6%12)) %12 
+		//(10^5 x 10^6) %12 = ((10^5%12) x (10^6%12)) %12 
 		//위 식에서  (10^5%12)를 또 쪼갬
 		//계속 쪼개다가 지수가 1이 될 때  (10^1%12) 나머지를 구하는 연산
 		st = new StringTokenizer(br.readLine());
@@ -22,7 +22,9 @@ public class BOJ1629 {
 		
 		long result = cal(a, b, c);
 		
-		System.out.println(result);;
+		System.out.println(result);
+		
+		br.close();
 	}
 	
 	private static long cal(int a, int b, int mod) {
