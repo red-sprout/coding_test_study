@@ -34,7 +34,7 @@ public class S16926 {
 		
 		//돌리기
 		for(int i = 0 ; i < r ; i ++) {
-			arr = rotate(arr, min, n , m);
+			arr = rotation(arr, min, n , m);
 		}
 		
 		printArr(arr, n, m);
@@ -49,7 +49,7 @@ public class S16926 {
 		}
 	}
 	
-    static int[][] rotate(int[][] arr, int min, int n, int m) {
+    static int[][] rotation(int[][] arr, int min, int n, int m) {
     	
     	for(int t=0; t<min/2; t++) { // 회전 시킬 그룹의 갯수 구하기
     		int x = t;
@@ -68,7 +68,7 @@ public class S16926 {
     				x = nx;
     				y = ny;
     			} 
-    			// 범위를 벗어났다면 다음 방향으로 어감
+    			// 범위를 벗어났다면 다음 방향으로 넘어감
     			else {
     				idx++;
     			}

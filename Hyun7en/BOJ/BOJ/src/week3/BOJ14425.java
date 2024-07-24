@@ -39,7 +39,6 @@ public class BOJ14425 {
 		
 		Map<String, Integer> map = new HashMap<>();
 		
-		//집합 S에 포함되어 있는 문자열들
 		for(int i = 0; i < N; i++) {
 			map.put(br.readLine(), 0);
 		}
