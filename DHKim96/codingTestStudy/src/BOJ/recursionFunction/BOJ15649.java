@@ -103,5 +103,9 @@ public class BOJ15649 {
 				visited[i] = false;
 			}
 		}
+		/*
+		 * 방문 배열을 비트마스킹 기법으로 구현 가능
+		 * 비트마스킹 기법 : 정수의 이진수 표현을 자료구조로 사용하는 기법 cf) https://travelbeeee.tistory.com/451
+		 */
 	}
 }

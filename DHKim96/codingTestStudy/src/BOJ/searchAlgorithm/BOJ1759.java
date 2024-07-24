@@ -1,4 +1,4 @@
-package BOJ;
+package BOJ.searchAlgorithm;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -8,7 +8,7 @@ import java.io.OutputStreamWriter;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-public class Main {
+public class BOJ1759 {
 	/*
 	 * 백준 no.1759 : 암호 만들기
 	 *  가능한 모든 조합을 탐색하여 조건에 맞는 암호 생성 => 백트래킹 알고리즘
@@ -108,6 +108,4 @@ public class Main {
 	public static boolean isVowel(char alphabet) {
 		return alphabet == 'a' || alphabet == 'e' || alphabet == 'i' || alphabet == 'o' || alphabet == 'u';
 	}
-	
 }
-
