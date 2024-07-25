@@ -7,13 +7,15 @@ import java.util.StringTokenizer;
 public class Main {
 	private static int l, c, mo, ja;
 	private static char[] str, result;
-	private static boolean[] visited;
-	private static StringBuilder sb;
 
 	public static void main(String[] args) throws IOException {
+		
+		/*
+		 * dfs로 해결 
+		 * 하나씩 result 에 담아서 프린트하기전에 조건에 맞는지 확인 후 조건에 맞는것만 출력
+		 */
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
-		sb = new StringBuilder();
 		
 		st = new StringTokenizer(br.readLine());
 		l = Integer.parseInt(st.nextToken());
@@ -33,7 +35,7 @@ public class Main {
 
 	private static void dfs(int v, int index) {
 		
-		
+		//길이가 l일때 탈출 조건확인하여 프린트
 		if (index == l + 1) {
 			mo = 0;
 			ja = 0;
