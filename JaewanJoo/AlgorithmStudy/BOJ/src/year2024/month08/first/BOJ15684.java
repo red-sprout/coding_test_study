@@ -20,12 +20,17 @@ public class BOJ15684 {
 			ladder[a][b] = true;
 		}
 		
+
+		br.close();
+	}
+	
+	public static void printLadder() {
 		StringBuilder sb = new StringBuilder();
 		for(int i = 1; i <= H; i++) {
 			for(int j = 1; j <= N; j++) {
 				sb.append("|");
 				if(ladder[i][j]) {
-					sb.append("-");
+					sb.append("_");
 				} else {
 					sb.append(" ");
 				}
@@ -33,6 +38,5 @@ public class BOJ15684 {
 			sb.append("\n");
 		}
 		System.out.print(sb.toString());
-		br.close();
 	}
 }
