@@ -64,6 +64,7 @@ public class Solution_2112 {
 	}
 	
 	public static void test(int idx) {
+		if(flag) return;
 		if(idx == temp.length) {
 			flag = flag || passed();
 			return;
