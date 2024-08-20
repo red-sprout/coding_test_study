@@ -3,90 +3,90 @@ package com.practice.a;
 import java.io.*;
 import java.util.*;
 
-public class Solution_1767 {
-	static int N, wire, core;
+class Solution_1767 {
+	static int coreTotal, wireTotal, N;
 	static int[][] map;
 	static List<int[]> list;
 	
-	static int[] dr = {-1, 0, 1, 0};
-	static int[] dc = {0, -1, 0, 1};
-	public static void main(String[] args) throws IOException {
-		System.setIn(new FileInputStream("res/a/input1767.txt"));
+	static int[] dr = {-1, 1, 0, 0};
+	static int[] dc = {0, 0, -1, 1};
+	public static void main(String[] args) throws Exception {
+		System.setIn(new FileInputStream("res/input1767.txt"));
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int T = Integer.parseInt(br.readLine());
-		StringTokenizer st = null;
 		StringBuilder sb = new StringBuilder();
+		StringTokenizer st = null;
+		int T = Integer.parseInt(br.readLine());
 		
 		for(int test = 1; test <= T; test++) {
 			sb.append("#").append(test).append(" ");
 			
 			N = Integer.parseInt(br.readLine());
+			
 			map = new int[N][N];
 			list = new ArrayList<>();
-			
 			for(int i = 0; i < N; i++) {
-				st = new StringTokenizer(br.readLine());
+				st = new StringTokenizer(br.readLine(), " ");
 				for(int j = 0; j < N; j++) {
 					map[i][j] = Integer.parseInt(st.nextToken());
-					if(i == 0 || j == 0 || i == N - 1 || j == N - 1 || map[i][j] == 0) continue;
-					list.add(new int[] {i, j});
+					if(map[i][j] == 1 && i != 0 && i != N - 1 && j != 0 && j != N - 1) {
+						list.add(new int[] {i, j});
+					}
 				}
 			}
 			
-			wire = Integer.MAX_VALUE;
-			core = Integer.MIN_VALUE;
-			dfs(0, 0, 0);
-			
-			sb.append(wire).append("\n");
+			coreTotal = 0;
+			wireTotal = Integer.MAX_VALUE;
+			solution(0, 0, 0);
+			sb.append(wireTotal).append("\n");
 		}
 		
 		System.out.print(sb.toString());
 		br.close();
 	}
 	
-	public static void dfs(int wireCnt, int coreCnt, int idx) {
-		if(idx == list.size()) {
-			if(core < coreCnt) {
-				wire = wireCnt;
-				core = coreCnt;
-			} else if(core == coreCnt){
-				wire = Math.min(wire, wireCnt);
+	public static void solution(int cnt, int core, int wire) {
+		if(cnt == list.size()) {
+			if(core > coreTotal) {
+				coreTotal = core;
+				wireTotal = wire;
+			} else if(core == coreTotal) {
+				wireTotal = Math.min(wireTotal, wire);
 			}
 			return;
 		}
 		
-		int[] pos = list.get(idx);
-		int row = pos[0];
-		int col = pos[1];
-		
-		for(int i = 0; i < 4; i++) {
-			int cnt = 0;
-			for(int k = 1; k <= N; k++) {
-				int nr = row + dr[i] * k;
-				int nc = col + dc[i] * k;
-				if(nr < 0 || nr >= N || nc < 0 || nc >= N) break;
-				if(map[nr][nc] == 1) {
-					cnt = 0;
-					break;
-				}
-				cnt++;
-			}
-			
-			if(cnt > 0) {
-				fillMap(row, col, i, cnt, 1);
-				dfs(wireCnt + cnt, coreCnt + 1, idx + 1);
-				fillMap(row, col, i, cnt, 0);
-			} else {
-				dfs(wireCnt, coreCnt, idx + 1);
+		int row = list.get(cnt)[0];
+		int col = list.get(cnt)[1];
+		for(int d = 0; d < 4; d++) {
+			if(check(row, col, d)) {
+				int length = paint(row, col, d, 1);
+				solution(cnt + 1, core + 1, wire + length);
+				paint(row, col, d, 0);
 			}
 		}
+		
+		solution(cnt + 1, core, wire);
 	}
 	
-	public static void fillMap(int row, int col, int d, int cnt, int value) {
-		for(int i = 1; i <= cnt; i++) {
-			int nr = row + dr[d] * i;
-			int nc = col + dc[d] * i;
-			map[nr][nc] = value;
+	public static boolean check(int row, int col, int d) {
+		for(int i = 0; i < N; i++) {
+			row += dr[d];
+			col += dc[d];
+			if(row < 0 || row >= N || col < 0 || col >= N) break;
+			if(map[row][col] == 1) return false;
 		}
+		return true;
+	}
+	
+	public static int paint(int row, int col, int d, int value) {
+		int length = 0;
+		for(int i = 0; i < N; i++) {
+			row += dr[d];
+			col += dc[d];
+			if(row < 0 || row >= N || col < 0 || col >= N) break;
+			length++;
+			map[row][col] = value;
+		}
+		return length;
 	}
 }

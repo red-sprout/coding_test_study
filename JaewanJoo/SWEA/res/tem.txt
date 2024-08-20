@@ -1,0 +1,21 @@
+import java.io.*;
+import java.util.*;
+
+class Solution_1767 {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
+		StringTokenizer st = null;
+		int T = Integer.parseInt(br.readLine());
+		
+		for(int test = 1; test <= T; test++) {
+			sb.append("#").append(test).append(" ");
+			
+			int answer = 0;
+			sb.append(answer).append("\n");
+		}
+		
+		System.out.print(sb.toString());
+		br.close();
+	}
+}

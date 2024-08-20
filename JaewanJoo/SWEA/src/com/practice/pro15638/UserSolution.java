@@ -4,32 +4,56 @@ import java.util.*;
 
 class UserSolution {
 	class Monarch {
-		int soldier;
-		char[] name;
-		Set<Integer> allies;
-		Set<Integer> enemies;
+		int row;
+		int col;
+		int soldiers;
+		String name;
+		int union = -1;
 		
-		Monarch(int soldier, char[] name) {
-			this.soldier = soldier;
+		Monarch(int row, int col, int soldiers, String name) {
+			this.row = row;
+			this.col = col;
+			this.soldiers = soldiers;
 			this.name = name;
-			this.allies = new HashSet<>();
-			this.enemies = new HashSet<>();
 		}
 	}
 	
-	int N;
+	class Union {
+		int idx;
+		Set<Integer> enemies = new HashSet<>();
+		
+		Union(int idx) {
+			this.idx = idx;
+		}
+	}
+	
+	List<Union> unions = new ArrayList<>();
+	Monarch[][] monarchs;
 	Monarch[] monarchList;
-	Exception exception = new Exception();
 	int[] dr = {-1, -1, 0, 1, 1, 1, 0, -1};
 	int[] dc = {0, 1, 1, 1, 0, -1, -1, -1};
 	
+	String char2String(char charArr[]) {
+		StringBuilder sb = new StringBuilder();
+		int idx = 0;
+		while(charArr[idx] != '\0') sb.append(charArr[idx++]);
+		return sb.toString();
+	}
+	
+	Monarch search(char charArr[]) {
+		String name = char2String(charArr);
+		for(int i = 0; i < monarchList.length; i++) if(monarchList[i].name.equals(name)) return monarchList[i];
+		return null;
+	}
+	
     void init(int N, int mSoldier[][], char mMonarch[][][]) {
-    	this.N = N;
-    	this.monarchList = new Monarch[N * N];
+    	monarchs = new Monarch[N][N];
+    	monarchList = new Monarch[N * N];
     	int idx = 0;
     	for(int i = 0; i < N; i++) {
     		for(int j = 0; j < N; j++) {
-    			monarchList[idx++] = new Monarch(mSoldier[i][j], mMonarch[i][j]);
+    			monarchs[i][j] = new Monarch(i, j, mSoldier[i][j], char2String(mMonarch[i][j]));
+    			monarchList[idx++] = monarchs[i][j];
     		}
     	}
     }
@@ -38,124 +62,124 @@ class UserSolution {
     	
     }
     
-    int getIdx(char mMonarch[]) {
-    	for(int i = 0; i < monarchList.length; i++) {
-    		try {
-    			isSameMonarch(mMonarch, monarchList[i].name);
-    			return i;
-    		} catch(Exception e) {}
-    	}
-    	return -1;
-    }
-    
-    void isSameMonarch(char mMonarchA[], char mMonarchB[]) throws Exception {
-    	for(int i = 0; i < mMonarchA.length; i++) {
-			if(mMonarchA[i] != mMonarchB[i]) throw exception;
-			if(mMonarchA[i] == '\0') break;
-		}
-    }
-    
-    void clear(int idx) {
-    	monarchList[idx].allies.clear();
-    	monarchList[idx].enemies.clear();
-    	for(int i = 0; i < monarchList.length; i++) {
-    		if(i == idx) continue;
-    		Monarch m = monarchList[i];
-    		m.allies.remove(idx);
-    		m.enemies.remove(idx);
-    	}
-    }
-    
     int ally(char mMonarchA[], char mMonarchB[]) {
-    	int idxA = getIdx(mMonarchA);
-    	int idxB = getIdx(mMonarchB);
-    	System.out.println(idxA + " " + idxB);
-    	return ally(idxA, idxB);
-    }
-    
-    int ally(int idxA, int idxB) {
-    	Monarch mA = monarchList[idxA];
-    	Monarch mB = monarchList[idxB];
+    	Monarch ma = search(mMonarchA);
+    	Monarch mb = search(mMonarchB);
     	
-    	if(idxA == idxB) return -1;
-    	if(mA.allies.contains(idxB)) return -1;
+    	if(ma.equals(mb)) return -1;
+    	if(ma.union == -1 && mb.union == -1) {
+    		int idx = unions.size();
+    		unions.add(new Union(idx));
+    		ma.union = idx;
+    		mb.union = idx;
+    		return 1;
+    	}
     	
-    	for(int iA : mA.allies) if(mB.enemies.contains(iA)) return -2;
-    	for(int iB : mB.allies) if(mA.enemies.contains(iB)) return -2;
+    	if(ma.union == mb.union) return -1;
+    	if(ma.union == -1) {
+    		ma.union = mb.union;
+    		return 1;
+    	}
     	
-    	for(int iA : mA.allies) mB.allies.add(iA);
-    	for(int iA : mA.enemies) mB.enemies.add(iA);
-    	for(int iB : mB.allies) mA.allies.add(iB);
-    	for(int iB : mB.enemies) mA.enemies.add(iB);
+    	if(mb.union == -1) {
+    		mb.union = ma.union;
+    		return 1;
+    	}
     	
-    	mA.allies.add(idxB);
-    	mB.allies.add(idxA);
+    	Union union1 = unions.get(ma.union);
+    	Union union2 = unions.get(mb.union);
     	
-        return 1;
+    	for(int e1 : union1.enemies) {
+    		for(int i = 0; i < monarchList.length; i++) {
+    			if(monarchList[i].union != mb.union) continue;
+    			if(e1 == i) return -2;
+    		}
+    	}
+    	
+    	for(int e2 : union2.enemies) {
+    		for(int i = 0; i < monarchList.length; i++) {
+    			if(monarchList[i].union != ma.union) continue;
+    			if(e2 == i) return -2;
+    		}
+    	}
+    	
+    	int idx = unions.size();
+    	Union union = new Union(idx);
+    	
+    	for(int e1 : union1.enemies) union.enemies.add(e1);
+    	for(int e2 : union2.enemies) union.enemies.add(e2);
+    	
+    	unions.add(union);
+    	
+    	for(Monarch mo : monarchList) if(mo.union == ma.union || mo.union == mb.union) mo.union = idx;
+    		
+    	return 1;
     }
     
     int attack(char mMonarchA[], char mMonarchB[], char mGeneral[]) {
-    	int idxA = getIdx(mMonarchA);
-    	int idxB = getIdx(mMonarchB);
-    	Monarch mA = monarchList[idxA];
-    	Monarch mB = monarchList[idxB];
+    	Monarch ma = search(mMonarchA);
+    	Monarch mb = search(mMonarchB);
     	
-    	int row = idxB / N;
-    	int col = idxB % N;
+    	if(ma.union == mb.union && ma.union != -1) return -1;
+    	
+    	if(ma.union == -1) {
+    		
+    	}
+    	
+    	if(mb.union == -1) {
+    		
+    	}
+
     	int attacker = 0;
-    	int defender = mB.soldier;
-    	for(int i = 0; i < 8; i++) {
-    		int nr = row + dr[i];
-    		int nc = col + dc[i];
+    	int defender = mb.soldiers;
+    	int N = monarchs.length;
+    	boolean isAttack = false;
+    	for(int d = 0; d < 8; d++) {
+    		int nr = mb.row + dr[d];
+    		int nc = mb.col + dc[d];
     		if(nr < 0 || nr >= N || nc < 0 || nc >= N) continue;
-    		int idx = nr * N + nc;
-    		if(mA.allies.contains(idx)) {
-    			int a = monarchList[idx].soldier / 2;
-    			monarchList[idx].soldier -= a;
-    			attacker += a;
+    		
+    		if(monarchs[nr][nc].union == ma.union) {
+    			isAttack = true;
+    			attacker += monarchs[nr][nc].soldiers / 2;
+    			monarchs[nr][nc].soldiers -= monarchs[nr][nc].soldiers / 2;
+    			continue;
     		}
-    		if(mB.allies.contains(idx)) {
-    			int d = monarchList[idx].soldier / 2;
-    			monarchList[idx].soldier -= d;
-    			defender += d;
+    		
+    		if(monarchs[nr][nc].union == mb.union) {
+    			defender += monarchs[nr][nc].soldiers / 2;
+    			monarchs[nr][nc].soldiers -= monarchs[nr][nc].soldiers / 2;
+    			continue;
     		}
     	}
+    	
+    	if(!isAttack) return -2;
     	
     	if(attacker > defender) {
-    		System.out.println(1);
-    		Set<Integer> enemies = monarchList[idxB].allies;
-    		clear(idxB);
-    		monarchList[idxB].name = mGeneral;
-    		monarchList[idxB].soldier = attacker - defender;
-    		for(int idx : enemies) monarchList[idxB].enemies.add(idx);
-    		ally(idxA, idxB);
+    		unions.get(mb.union).enemies.add(ma.union);
+    		unions.get(ma.union).enemies.add(mb.union);
+    		mb.union = ma.union;
+    		mb.name = char2String(mGeneral);
+    		mb.soldiers = attacker - defender;
     		return 1;
-    	} else {
-    		System.out.println(0);
-        	mA.enemies.add(idxB);
-        	mB.enemies.add(idxA);
-        	for(int iA : mA.allies) mB.enemies.add(iA);
-        	for(int iB : mB.allies) mA.enemies.add(iB);
-    		mB.soldier = defender - attacker;
-    		return 0;
     	}
+    	
+		unions.get(mb.union).enemies.add(ma.union);
+		unions.get(ma.union).enemies.add(mb.union);
+		mb.soldiers = defender - attacker;
+    	return 0;
     }
     
     int recruit(char mMonarch[], int mNum, int mOption) {
-    	int idx = getIdx(mMonarch);
-    	Monarch m = monarchList[idx];
-    	m.soldier += mNum;
-        if(mOption == 1) {
-        	int sum = m.soldier;
-        	for(int i : m.allies) {
-        		monarchList[i].soldier += mNum;
-        		sum += monarchList[i].soldier;
-        	}
-        	System.out.println(sum);
-        	return sum;
-        } else {
-        	System.out.println(m.soldier);
-        	return m.soldier;
-        }
+    	Monarch m = search(mMonarch);
+    	if(mOption == 0) return m.soldiers += mNum;
+    	int result = 0;
+    	for(Monarch mo : monarchList) {
+    		if(mo.union == m.union) {
+    			mo.soldiers += mNum;
+    			result += mo.soldiers;
+    		}
+    	}
+    	return result;
     }
 }
