@@ -28,7 +28,7 @@ public class RandomGame {
 		System.out.println("        Result        ");
 		System.out.println("**********************");
 		for(int i = 0; i < p; i++) {
-			System.out.printf("문제 %c - %s님\n", i + 'A', names[i]);
+			System.out.printf("문제 %c - %s님\n", i + 'A', names[i % n]);
 		}
 		
 		br.close();
