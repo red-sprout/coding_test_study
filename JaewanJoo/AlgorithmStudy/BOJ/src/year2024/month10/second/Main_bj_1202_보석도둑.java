@@ -10,37 +10,27 @@ public class Main_bj_1202_보석도둑 {
 		st = new StringTokenizer(br.readLine(), " ");
 		int N = Integer.parseInt(st.nextToken());
 		int K = Integer.parseInt(st.nextToken());
-		PriorityQueue<int[]> germ = new PriorityQueue<>((o1, o2) -> o1[1] == o2[1] ? o2[0] - o1[0] : o2[1] - o1[1]);
-		PriorityQueue<Integer> bag = new PriorityQueue<>(Collections.reverseOrder());
+		int[][] germs = new int[N][2];
 		for(int i = 0; i < N; i++) {
 			st = new StringTokenizer(br.readLine(), " ");
-			int m = Integer.parseInt(st.nextToken());
-			int v = Integer.parseInt(st.nextToken());
-			germ.offer(new int[] {m, v});
+			germs[i][0] = Integer.parseInt(st.nextToken());
+			germs[i][1] = Integer.parseInt(st.nextToken());
 		}
-		bag.offer(0);
+		int[] bags = new int[K];
 		for(int i = 0; i < K; i++) {
-			bag.offer(Integer.parseInt(br.readLine()));
+			bags[i] = Integer.parseInt(br.readLine());
 		}
-		int answer = 0;
-		while(true) {
-			Deque<int[]> stack = new ArrayDeque<>();
-			int now = bag.poll();
-			if(now == 0) break;
-			int next = bag.peek();
-			while(!germ.isEmpty()) {
-				int[] cur = germ.poll();
-				int m = cur[0];
-				int v = cur[1];
-				if(next < m && m <= now) {
-					answer += v;
-					break;
-				}
-				stack.offerLast(cur);
+		Arrays.sort(germs, (o1, o2) -> o1[0] == o2[0] ? o2[1] - o1[1] : o1[0] - o2[0]);
+		Arrays.sort(bags);
+		PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+		long answer = 0;
+		int gIdx = 0;
+		for(int i = 0; i < K; i++) {
+			while(gIdx < N) {
+				if(bags[i] < germs[gIdx][0]) break;
+				pq.offer(germs[gIdx++][1]);
 			}
-			while(!stack.isEmpty()) {
-				germ.offer(stack.pollLast());
-			}
+			if(!pq.isEmpty()) answer += pq.poll();
 		}
 		System.out.println(answer);
 		br.close();
