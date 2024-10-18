@@ -6,24 +6,16 @@ import java.util.*;
 public class Main_bj_16854_움직이는미로탈출 {
 	static int[] dr = {0, 0, 1, 1, 1, 0, -1, -1, -1};
 	static int[] dc = {0, 1, 1, 0, -1, -1, -1, 0, 1};
-	static class Wall {
-		int row, col;
-		boolean isExist = true;
-		Wall(int row, int col) {
-			this.row = row;
-			this.col = col;
-		}
-	}
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		char[][] map = new char[8][8];
-		List<Wall> wallList = new ArrayList<>();
+		List<int[]> wallList = new ArrayList<>();
 		for(int i = 0; i < 8; i++) {
 			String row = br.readLine();
 			for(int j = 0; j < 8; j++) {
 				char c = row.charAt(j);
 				map[i][j] = c;
-				if(c == '#') wallList.add(new Wall(i, j));
+				if(c == '#') wallList.add(new int[] {i, j});
 			}
 		}
 		boolean check = true;
@@ -53,11 +45,8 @@ public class Main_bj_16854_움직이는미로탈출 {
 			for(int j = 0; j < 8; j++) {
 				Arrays.fill(map[j], '.');
 			}
-			for(Wall w : wallList) {
-				w.row++;
-				w.isExist = w.row < 8;
-				if(!w.isExist) continue;
-				map[w.row][w.col] = '#';
+			for(int[] w : wallList) {
+				if(++w[0] < 8) map[w[0]][w[1]] = '#';
 			}
 		}
 		System.out.println(check ? 1 : 0);
